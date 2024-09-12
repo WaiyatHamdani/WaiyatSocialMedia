@@ -26,7 +26,7 @@
 > Other modes for `ddl-auto`: `create`, `validate`, `update`, `create-drop`
 
 ## Run Server
-Then you can start the Java server by running `WaiyatCaloriesCounterApplication.java`.
+Then you can start the Java server by running `WaiyatSocialMediaApplication.java`.
 
 ## Client Setup
 To start your React application in Visual Studio Code using the bash terminal:
