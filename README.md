@@ -34,3 +34,4 @@ To start your React application in Visual Studio Code using the bash terminal:
 1. First, run `npm install` after pulling the project.
 2. Install React Router DOM: `npm install react-router-dom`
 3. Install Axios: `npm install axios`
+4. Then you can start the client: `npm start`
