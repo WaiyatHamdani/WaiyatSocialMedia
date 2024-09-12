@@ -1,0 +1,31 @@
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75vw;
+    margin: auto;
+    margin-top: 25px;
+    box-shadow: 1px 5px 10px 8px rgb(77 71 81 / 30%);
+    border-radius: 20px;
+    padding-bottom: 25px;
+}
+.profile-page button {
+    margin-top: 10px;
+}
+
+.profile-create-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+}
+.profile-create-button {
+    font-size: xxx-large;
+    border-radius: 20px;
+    padding: 25px;
+}
+.profile-create-button:hover {
+    cursor: pointer;
+    background-color: lightgray;
+    transition: 0.3s;
+}
