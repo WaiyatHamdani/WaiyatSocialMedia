@@ -30,8 +30,8 @@ body {
     margin-right: 15px;
 }
 .navbar img{
-    width: 110px;
-    height: auto;
+    width: 150px;
+    height: 70%;
 }
 
 .post {
@@ -170,7 +170,11 @@ body {
   background-color: #6666ff;
 }
 
-
+.profilepic{
+  height: 80px;
+  width: vh;
+  
+}
 
 #registerform {
   background-color: #eeeeee;

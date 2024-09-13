@@ -20,9 +20,8 @@
     height: 30vh;
 }
 .profile-create-button {
-    font-size: xxx-large;
     border-radius: 20px;
-    padding: 25px;
+    padding: 15px;
 }
 .profile-create-button:hover {
     cursor: pointer;

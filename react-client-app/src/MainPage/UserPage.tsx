@@ -3,6 +3,9 @@ import axios from 'axios';
 import User from '../fetchData/User'; 
 import { Link } from 'react-router-dom';
 import Posts from './Posts';
+import '../CSS/main.css';
+import EditProfile from './EditProfile';
+import '../CSS/Profile.css';
 
 function UserPage() {
   const [username, setUsername] = useState<string | null>(null);
@@ -38,12 +41,16 @@ function UserPage() {
       <Posts />
       <div className="sidebar">
         <h2 id="username">Username: {username || 'null'}</h2>
+        <img src="/profilepic.jpg" alt="Logo" className="profilepic" />
         <p id="Bio">Bio: {bio || 'null'}</p>
         <p id="Firstname">First_name: {firstname || 'null'}</p>
         <p id="lastname">Last_name: {lastname || 'null'}</p>
+        <Link to="/profile/edit">
+                <button className='profile-create-button'>Edit Profile</button>
+        </Link>
         <div className="link-container">
           <div className="link-box">
-            <Link to="/follow" className="link">Follow User</Link>
+            
             {/*<Link to="/register" className="link">logout</Link>*/}
             <Link to="/logout" className="link">Logout</Link>
           </div>

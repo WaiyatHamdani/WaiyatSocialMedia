@@ -57,7 +57,7 @@ function EditProfile() {
                 }
             }
         )
-        navigate('/profile');
+        navigate('/main');
     }
     
 
