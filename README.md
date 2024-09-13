@@ -6,7 +6,7 @@
 - [Client Setup](#client-setup)
 
 
-## The Website 
+## The Demo Website 
 ![Demo](assets/Demo.gif)
 
 ## Properties
