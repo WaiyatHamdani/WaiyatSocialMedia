@@ -12,7 +12,6 @@
 ## Properties
 
 ### URL, Username, and Password
-- `spring.application.name=WaiyatCaloriesCounter`
 - `spring.datasource.url=jdbc:postgresql://localhost:####/your_db_name`
 - `spring.datasource.username=your_username`
 - `spring.datasource.password=your_password`
