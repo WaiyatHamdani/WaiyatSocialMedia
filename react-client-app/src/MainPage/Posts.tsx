@@ -24,17 +24,17 @@ interface Post {
 interface Comment {
   post_post_id: number;
   comments: string;
+  userId?: number;
 }
 
 function Posts() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [newPostMessage, setNewPostMessage] = useState<string>('');
-  const [newComment, setNewComment] = useState<string>(''); 
+  const [newComment, setNewComment] = useState<{ [key: number]: string }>({}); // Modify to use an object
   const [editCommentById, setEditCommentById] = useState<number | null>(null);
   const [editCommentText, setEditCommentText] = useState<string>('');
-  const [nextCommentId, setNextCommentId] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<Users | null>(null);
-  const BASE_URL = 'http://localhost:8080/posts'
+  const BASE_URL = 'http://localhost:8080/posts';
 
   useEffect(() => {
     async function fetchCurrentUser() {
@@ -105,25 +105,38 @@ function Posts() {
     }
   }
 
+
   // Handle new comment
-  async function handleComment(post_id: number){
-    if (newComment.trim() === '') return;
+  async function handleComment(post_id: number) {
+    if (newComment[post_id]?.trim() === '') return;
 
-  try {
-    const response = await axios.post(`http://localhost:8080/posts/${post_id}/comment`, { post_post_id: post_id,comments: newComment });
-    const newCommentData: Comment = response.data;
-    setPosts((prevPosts) =>
-      prevPosts.map((post) =>
-        post.post_id === post_id? { ...post, comments: [...post.comments, newCommentData] }: post
-      )
-    );
-    setNewComment('');
-  } catch (error) {
-    console.error('Error commenting on post:', error);
+    try {
+      const response = await axios.put(`http://localhost:8080/posts/${post_id}/comment`, {
+        userId: currentUser?.user_id,
+        comments: newComment[post_id],
+      });
+  
+      console.log('New comment data:', response.data);
+      const newCommentData: Comment = response.data;
+  
+      // Ensure newCommentData is correctly added to the comments array
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post.post_id === post_id
+            ? { ...post, comments: [...post.comments, newCommentData] }
+            : post
+        )
+      );
+  
+      // Clear the specific new comment input
+      setNewComment((prevComments) => ({ ...prevComments, [post_id]: '' }));
+    } catch (error) {
+      console.error('Error commenting on post:', error);
+    }
   }
-  };
 
 
+  
  // Handle share
  async function handleShare(user_id: number, post_id: number) {
   try {
@@ -180,49 +193,30 @@ function Posts() {
             <h4>{post.message}</h4>
             <div className="post-actions">
               <span>Likes: {post.likes}</span>
-              
-                <button className="button" onClick={() => handleLike(post.user.user_id, post.post_id)}>Like({post.likes})</button>
-              </div>
-              <button className="button" onClick={() => handleShare(post.user.user_id, post.post_id)}>Share({post.shares})</button>
-            
-            {editCommentById === null ? (
-              <>
-              <p>{newComment}</p> {/* place holder for comments */}
-                <textarea
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  placeholder="Add a comment..."
-                  rows={2}
-                  cols={40}
-                />
-                <button onClick={() => handleComment(post.post_id)}>Post Comment</button>
-                <button className="button" onClick={() => handleDeleteComment(post.post_id, post)}>Delete</button>
-              </>
-            ) : (
-              <>
-                <textarea
-                  value={editCommentText}
-                  onChange={(e) => setEditCommentText(e.target.value)}
-                  placeholder="Edit comment..."
-                  rows={2}
-                  cols={40}
-                />
-                <button onClick={handleSaveEditedComment}>Save changes</button>
-              </>
-            )}
+              <button className="button" onClick={() => handleLike(post.user.user_id, post.post_id)}>👍({post.likes})</button>
+            </div>
 
-          <div>
-            
-            {post.comments.map((comment) => (
-              <div key={comment.post_post_id} className="comment-box">
-                {comment.comments}
-                <br />
-                <span>Likes: {post.message}</span>
-                <button className="button" onClick={() => handleEditComment(comment.post_post_id)}>Edit</button>
-                <button className="button" onClick={() => handleDeleteCommentshare(post.post_id, comment.post_post_id)}>Delete</button>
-              </div>
-            ))}
-          </div>
+            {/* Comments Section */}
+            <div>
+              {post.comments.map((comment, index) => (
+                <div key={index} className="comment-box">
+                  <p>{newComment[post.post_id]}</p>
+                  <br />
+                  <button className="button" onClick={() => handleEditComment(comment.post_post_id)}>Edit</button>
+                  <button className="button" onClick={() => handleDeleteCommentshare(post.post_id, comment.post_post_id)}>Delete</button>
+                </div>
+              ))}
+            </div>
+
+            {/* Add New Comment */}
+            <textarea
+              value={newComment[post.post_id] || ''} // Use specific comment for this post
+              onChange={(e) => setNewComment({ ...newComment, [post.post_id]: e.target.value })} // Update specific comment
+              placeholder="Add a comment..."
+              rows={2}
+              cols={40}
+            />
+            <button onClick={() => handleComment(post.post_id)}>Post Comment</button>
           </div>
         ))
       ) : (

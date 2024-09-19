@@ -1,6 +1,7 @@
 package com.Waiyat.SocialMedia.Controllers;
 
 
+import com.Waiyat.SocialMedia.DTO.CommentDto;
 import com.Waiyat.SocialMedia.DTO.PostDto;
 import com.Waiyat.SocialMedia.Services.PostServices;
 import com.Waiyat.SocialMedia.Services.UserServices;
@@ -72,8 +73,8 @@ public class PostController {
     }
 
     @PutMapping("/{id}/comment")
-    public ResponseEntity<String> commentPost(@PathVariable Long id, @RequestBody String comment) {
-        postService.commentPost(id, comment);
-        return ResponseEntity.ok("Commented");
+    public ResponseEntity<CommentDto> commentPost(@RequestBody CommentDto commentDto) {
+        CommentDto newComment = commentDto;
+        return ResponseEntity.ok(newComment); // Return the new comment object
     }
 }

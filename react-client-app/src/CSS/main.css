@@ -40,6 +40,21 @@ body {
     padding: 20px;
     border-radius: 10px;
 }
+.post h4 {
+  color: #1daded;
+  font-size: 150%;
+  margin: 1%;;
+}
+
+.post button {
+  border-radius: 20px;
+  
+}
+.post button :hover {
+  cursor:pointer;
+  background-color: lightgray;
+  transition: 0.3s; 
+}
 .sidebar {
     background-color: #3843e9;
     color: white;
